@@ -30,13 +30,13 @@ foreach ($ui->pc_stats as $stat) {
 				<tr><td><a href="<?php echo $ui->url(array('fn' => $ui->fn));?>"><?php echo htmlentities($ui->fn);?></a></td><?php
 if ($ui->display_calls) {
 	echo XHProf_UI\Utils::td_num($data[$ui->fn]['ct'], $ui->config->format_cbk['ct'], ($ui->sort == 'ct'));
-	echo XHProf_UI\Utils::td_pct($data[$ui->fn]['ct'], $ui->totals['ct'], ($ui->sort == 'ct'));
+	echo XHProf_UI\Utils::td_pct($data[$ui->fn]['ct'], $ui->totals[0]['ct'], ($ui->sort == 'ct'));
 }
 
 foreach ($ui->metrics as $metric) {
 	// Inclusive metric
 	echo XHProf_UI\Utils::td_num($data[$ui->fn][$metric], $ui->config->format_cbk[$metric], ($ui->sort == $metric));
-	echo XHProf_UI\Utils::td_pct($data[$ui->fn][$metric], $ui->totals[$metric], ($ui->sort == $metric));
+	echo XHProf_UI\Utils::td_pct($data[$ui->fn][$metric], $ui->totals[0][$metric], ($ui->sort == $metric));
 }
 
 ?></tr>
@@ -47,7 +47,7 @@ if ($ui->display_calls) {
 foreach ($ui->metrics as $metric) {
 	// Inclusive metric
 	echo XHProf_UI\Utils::td_num($data[$ui->fn]['excl_'.$metric], $ui->config->format_cbk['excl_'.$metric], ($ui->sort == $metric), 'Child', $metric);
-	echo XHProf_UI\Utils::td_pct($data[$ui->fn]['excl_'.$metric], $ui->totals[$metric], ($ui->sort == $metric), 'Child', $metric);
+	echo XHProf_UI\Utils::td_pct($data[$ui->fn]['excl_' . $metric], $ui->totals[0][$metric], ($ui->sort == $metric), 'Child', $metric);
 }
 
 ?></tr> 
@@ -96,7 +96,7 @@ foreach (array('parent', 'child') as $pc) {
 			foreach ($ui->metrics as $metric) {
 				// Inclusive metric
 				echo XHProf_UI\Utils::td_num($info[$metric], $ui->config->format_cbk[$metric], ($ui->sort == $metric));
-				echo XHProf_UI\Utils::td_pct($info[$metric], $pc == 'parent' ? $ui->totals[$metric] : $base_info[$metric], ($ui->sort == $metric));
+				echo XHProf_UI\Utils::td_pct($info[$metric], $pc == 'parent' ? $ui->totals[0][$metric] : $base_info[$metric], ($ui->sort == $metric));
 			}
 	?></tr>
 <?php 
